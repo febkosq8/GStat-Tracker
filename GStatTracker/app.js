@@ -3,6 +3,7 @@ const usernameForm = document.getElementById('usernameForm');
 const repoUrlForm = document.getElementById('repoUrlForm');
 var contiName=[];
 var contiNum=[];
+var totConti=0;
 const xhr2 = new XMLHttpRequest();
 
 // Listen for submissions on GitHub username input form
@@ -57,6 +58,7 @@ function requestContributors(repoUrl)
             //console.log(data[i]);
             contiName[i]=data[i].login;
             contiNum[i]=data[i].contributions;
+            totConti = totConti + contiNum[i];
             //console.log("Console Output :"+contiName[i],contiNum[i]+" i:"+i );
 
         }   
@@ -168,29 +170,19 @@ function requestReposDetails(repoUrl) {
             let ul = document.getElementById('userRepos');
                 // Create variable that will create li's to be added to ul
                 let li = document.createElement('li');
-                let l2 = document.createElement('l2');
                 // Add Bootstrap list item class to each li
                 li.classList.add('list-group-item')
-                l2.classList.add('list-group-item')
                 // Create the html markup for each li
                 //https://api.github.com/repos/febkosq8/Gstat-tracker/contributors
                 requestContributors(repoUrl);
                 setTimeout(() => {
                     //console.log("Repo Console Output :"+contiName[0],contiNum[0]);
                     //console.log(contiNum.length);
-                    var tConti;
+                    var tConti="<br />";
                     for(let i in contiNum)
                     {
 
-                        if(i==0)
-                        {
-                            tConti=contiName[i]+","+contiNum[i]+"\n";
-                        }
-                        else
-                        {
-                            tConti=tConti+contiName[i]+","+contiNum[i]+"\n";
-                        }
-                        l2.innerHTML = (`<p>${tConti}</p>`);
+                        tConti=tConti + "User : " + contiName[i] + " issued a total of " + contiNum[i] + " Commits."+ "<br />";
                     }
                     console.log("tConti : "+tConti);
                     var conti;
@@ -199,15 +191,13 @@ function requestReposDetails(repoUrl) {
                     <p><strong>URL :</strong> <a href="${data.html_url}">${data.html_url}</a></p>
                     <p><strong>Created by :</strong> ${data.owner.login}</p>
                     <p><strong>Created At :</strong> ${data.created_at}</p>
-                    <p><strong>Last Updated On :</strong> ${data.pushed_at}</p>  
+                    <p><strong>Last Commit On :</strong> ${data.pushed_at}</p>  
                     <p><strong>Contributors :</strong> ${tConti}</p>
-                    for (i=0;i < contiName.length;i++)
-                    {
-                        conti += `<div class=conti>${contiName[i]} | ${contiNum[i]}<div>\n`
-                    }
+                    <p><strong>Total Commits :</strong> ${totConti}</p>
+                    
                                    
                     `)}
-                , 900);
+                , 500);
                 
                 
             ;
