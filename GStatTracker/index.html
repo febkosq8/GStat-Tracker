@@ -4,9 +4,10 @@
 		<meta charset="UTF-8" />
 		<title>GStat Tracker</title>
 		<link rel="icon" type="image/png" href="assets/favicon.png" />
+
 		<!-- Import the Bulma CSS CDN -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
-		<script src="app.js"></script>
+	
 	</head>
 
 	<body>
@@ -14,9 +15,10 @@
 			<div class="hero-body has-text-centered">
 				<p class="title">GStat Tracker</p>
 				<p class="subtitle">All-in-one tool for GitHub monitoring</p>
-				<p class="subtitle is-5">Version 1.2.3</p>
 			</div>
 		</section>
+
+		<!-- UserRepoSearch Start-->
 		<div class="columns mt-4">
 			<div class="column is-one-third"></div>
 			<div class="column">
@@ -36,6 +38,9 @@
 			</div>
 			<div class="column"></div>
 		</div>
+		<!-- UserRepoSearch End-->
+
+		<!-- RepoDetailsSearch Start-->
 		<div class="columns mt-4">
 			<div class="column is-one-third"></div>
 			<div class="column">
@@ -56,6 +61,19 @@
 			</div>
 			<div class="column"></div>
 		</div>
+		<!-- RepoDetailsSearch End-->
+
 		<ul id="displayList" class="list-group mx-auto mb-5" style="width: 500px"></ul>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>GStat Tracker</strong> by <a href="https://jgthms.com">Febkosq8</a>.
+          <br>  You are running <strong>Ver: 1.2.5</strong> .
+        </p>
+      </div>
+    </footer>
+
+		<script src="app.js"></script>
 	</body>
 </html>
