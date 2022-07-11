@@ -1,215 +1,137 @@
 // Get the GitHub username input form
-const usernameForm = document.getElementById('usernameForm');
-const repoUrlForm = document.getElementById('repoUrlForm');
-var contiName=[];
-var contiNum=[];
-var totConti=0;
-const xhr2 = new XMLHttpRequest();
+const usernameForm = document.getElementById("usernameForm");
+const repoUrlForm = document.getElementById("repoUrlForm");
+let contiName = [];
+let contiNum = [];
+let totConti = 0;
 
-// Listen for submissions on GitHub username input form
-usernameForm.addEventListener('submit', (e) => {
-
-    // Prevent default form submission action
-    e.preventDefault();
-
-    // Get the GitHub username input field on the DOM
-    let usernameInput = document.getElementById('usernameInput');
-
-    // Get the value of the GitHub username input field
-    let usernameForm = usernameInput.value;
-
-    // Run GitHub API function, passing in the GitHub username
-    requestUserRepos(usernameForm);
-
-})
-
-// Listen for submissions on GitHub Repo URL input form
-repoUrlForm.addEventListener('submit', (e) => {
-
-    // Prevent default form submission action
-    e.preventDefault();
-
-    // Get the GitHub username input field on the DOM
-    let repoInput = document.getElementById('repoInput');
-
-    // Get the value of the GitHub username input field
-    let repoUrlForm = repoInput.value;
-
-    // Run GitHub API function, passing in the GitHub username
-    requestReposDetails(repoUrlForm);
-
-})
-
-function requestContributors(repoUrl)
-{
-    
-    const url2 = `https://api.github.com/repos/${repoUrl}/contributors`;
-    xhr2.open('GET', url2, true);
-    
-    xhr2.onload = function() {
-        
-        // Parse API data into JSON
-        const data = JSON.parse(this.response);
-        //console.log("Inside requestContributors");
-        //console.log(data);
-        for (let i in data)
-        {
-            //console.log("Inside Inside requestContributors");
-            //console.log(data[i]);
-            contiName[i]=data[i].login;
-            contiNum[i]=data[i].contributions;
-            totConti = totConti + contiNum[i];
-            //console.log("Console Output :"+contiName[i],contiNum[i]+" i:"+i );
-
-        }   
-        //console.log("State:"+xhr2.status);   
-    }
-    
-    //console.log("Console Output 2:"+contiName[0],contiNum[0]);
-  
-    // Send the request to the server
-    xhr2.send();
+async function dataFetch(url, method) {
+	return await fetch(url, {
+		method: method
+	}).then((response) => response.json());
 }
 
-function requestUserRepos(username) {
+usernameForm.addEventListener("submit", (e) => {
+	// Prevent default form submission action
+	e.preventDefault();
 
-    // Create new XMLHttpRequest object
-    const xhr = new XMLHttpRequest();
+	// Get the GitHub username input field on the DOM
+	let usernameInput = document.getElementById("usernameInput");
 
-    // GitHub endpoint, dynamically passing in specified username
-    //https://api.github.com/users/febkosq8/repos
-    const url = `https://api.github.com/users/${username}/repos`;
+	// Get the value of the GitHub username input field
+	let usernameForm = usernameInput.value;
 
-    // Open a new connection, using a GET request via URL endpoint
-    // Providing 3 arguments (GET/POST, The URL, Async True/False)
-    xhr.open('GET', url, true);
+	// Run GitHub API function, passing in the GitHub username
+	requestdisplayList(usernameForm);
+});
 
-    // When request is received
-    // Process it here
-    xhr.onload = function() {
+// Listen for submissions on GitHub Repo URL input form
+repoUrlForm.addEventListener("submit", (e) => {
+	// Prevent default form submission action
+	e.preventDefault();
 
-        // Parse API data into JSON
-        const data = JSON.parse(this.response);
-        console.log("Inside requestUserRepos");
-        console.log(data);
-        let root = document.getElementById('userRepos');
-        while (root.firstChild) {
-            root.removeChild(root.firstChild);
-        }
-        if (data.message === "Not Found") {
-            let ul = document.getElementById('userRepos');
+	// Get the GitHub username input field on the DOM
+	let repoInput = document.getElementById("repoInput");
 
-            // Create variable that will create li's to be added to ul
-            let li = document.createElement('li');
+	// Get the value of the GitHub username input field
+	let repoUrlForm = repoInput.value;
 
-            // Add Bootstrap list item class to each li
-            li.classList.add('list-group-item')
-                // Create the html markup for each li
-            li.innerHTML = (`
-                <p><strong>No account exists with username:</strong> ${username}</p>`);
-            // Append each li to the ul
-            ul.appendChild(li);
-        } else {
+	// Run GitHub API function, passing in the GitHub username
+	requestReposDetails(repoUrlForm);
+});
 
-            // Get the ul with id of of userRepos
-            let ul = document.getElementById('userRepos');
-            let p = document.createElement('p');
-            p.innerHTML = (`<p><strong>Number of Public Repos : ${data.length}</p>`)
-            ul.appendChild(p);
-            // Loop over each object in data array
-            for (let i in data) {
-                // Create variable that will create li's to be added to ul
-                let li = document.createElement('li');
+async function requestContributors(repoUrl) {
+	let url = `https://api.github.com/repos/${repoUrl}/contributors`;
+	return await dataFetch(url, "GET");
+}
 
-                // Add Bootstrap list item class to each li
-                li.classList.add('list-group-item')
+async function requestdisplayList(username) {
+	let url = `https://api.github.com/users/${username}/repos`;
+	let data = await dataFetch(url, "GET");
+	let children = [];
+	if (data.message === "Not Found") {
+		let ul = document.getElementById("displayList");
+		// Create variable that will create li's to be added to ul
+		let li = document.createElement("li");
+		// Add Bootstrap list item class to each li
+		li.classList.add("list-group-item");
+		// Create the html markup for each li
+		li.innerHTML = `
+                <p><strong>No account exists with username:</strong> ${username}</p>`;
+		// Append each li to the ul
+		children.push(li);
+		ul.replaceChildren(...children);
+	} else {
+		// Get the ul with id of of displayList
+		let ul = document.getElementById("displayList");
+		let p = document.createElement("p");
+		p.innerHTML = `<p><strong>Number of Public Repos : ${data.length}</p>`;
+		ul.appendChild(p);
+		// Loop over each object in data array
+		for (let i in data) {
+			// Create variable that will create li's to be added to ul
+			let li = document.createElement("li");
 
-                // Create the html markup for each li
-                li.innerHTML = (`
+			// Add Bootstrap list item class to each li
+			li.classList.add("list-group-item");
+
+			// Create the html markup for each li
+			li.innerHTML = `
                 <div class="box my-4 px-1">
                 <p><strong>Repo:</strong> ${data[i].name}</p>
                 <p><strong>Description:</strong> ${data[i].description}</p>
                 <p><strong>URL:</strong> <a href="${data[i].html_url}">${data[i].html_url}</a></p>
                 </div>
-            `);
+            `;
 
-                // Append each li to the ul
-                ul.appendChild(li);
-
-            }
-
-        }
-    }
-
-    // Send the request to the server
-    xhr.send();
-
+			// Append each li to the ul
+			children.push(li);
+		}
+		ul.replaceChildren(...children);
+	}
 }
 
-function requestReposDetails(repoUrl) {
-
-    // Create new XMLHttpRequest object
-    const xhr1 = new XMLHttpRequest();
-
-    // GitHub endpoint, dynamically passing in specified username
-    //https://api.github.com/repos/febkosq8/CryptoGIF
-    const url1 = `https://api.github.com/repos/${repoUrl}`;
-    
-    // Open a new connection, using a GET request via URL endpoint
-    // Providing 3 arguments (GET/POST, The URL, Async True/False)
-    xhr1.open('GET', url1, true);
-    
-
-    // When request is received
-    // Process it here
-    xhr1.onload = function() {
-        
-        // Parse API data into JSON
-        const data = JSON.parse(this.response);
-        console.log("Inside requestReposDetails");
-        console.log(data);
-            // Get the ul with id of of userRepos
-            let ul = document.getElementById('userRepos');
-                // Create variable that will create li's to be added to ul
-                let li = document.createElement('li');
-                // Add Bootstrap list item class to each li
-                li.classList.add('list-group-item')
-                // Create the html markup for each li
-                //https://api.github.com/repos/febkosq8/Gstat-tracker/contributors
-                requestContributors(repoUrl);
-                setTimeout(() => {
-                    //console.log("Repo Console Output :"+contiName[0],contiNum[0]);
-                    //console.log(contiNum.length);
-                    var tConti="<br />";
-                    for(let i in contiNum)
-                    {
-
-                        tConti=tConti + "User : " + contiName[i] + " issued a total of " + contiNum[i] + " Commits."+ "<br />";
-                    }
-                    console.log("tConti : "+tConti);
-                    var conti;
-                    li.innerHTML = (`
+async function requestReposDetails(repoUrl) {
+	let url = `https://api.github.com/repos/${repoUrl}`;
+	// Get the ul with id of of displayList
+	let ul = document.getElementById("displayList");
+	// Create variable that will create li's to be added to ul
+	let li = document.createElement("li");
+	// Add Bootstrap list item class to each li
+	li.classList.add("list-group-item");
+	// Create the html markup for each li
+	//https://api.github.com/repos/febkosq8/Gstat-tracker/contributors
+	let data = await dataFetch(url, "GET");
+	let contributorList = await requestContributors(repoUrl);
+	let totalContributions = contributorList.reduce((acc, curr) => acc + curr.contributions, 0);
+	let contributorTable = `<table class="table">
+        <thead>
+            <tr>
+                <td><strong>Name</strong></td>
+                <td><strong>Commits</strong></td>
+            </tr>
+        </thead>
+        <tbody>
+        ${contributorList
+			.map((contributor) => {
+				return `<tr>
+                <td>${contributor.login}</td>
+                <td>${contributor.contributions}</td>
+            </tr>`;
+			})
+			.join("")}
+        </tbody>
+    </table>`;
+	li.innerHTML = `
                     <div class="box">
                         <p><strong>Repo Name :</strong> ${data.name}</p>
                         <p><strong>URL :</strong> <a href="${data.html_url}">${data.html_url}</a></p>
                         <p><strong>Created by :</strong> ${data.owner.login}</p>
                         <p><strong>Created At :</strong> ${data.created_at}</p>
                         <p><strong>Last Commit On :</strong> ${data.pushed_at}</p>  
-                        <p><strong>Contributors :</strong> ${tConti}</p>
-                        <p><strong>Total Commits :</strong> ${totConti}</p>
+                        <p><strong>Contributors :</strong> ${contributorTable}</p>
+                        <p><strong>Total Commits :</strong> ${totalContributions}</p>
                     </div>
-                                   
-                    `)}
-                , 500);
-                
-                
-            ;
-
-                // Append each li to the ul
-                ul.appendChild(li);
-                
-    }
-
-    // Send the request to the server
-    xhr1.send();    
+                    `;
+	ul.replaceChildren(li);
 }
