@@ -126,9 +126,11 @@ function requestUserRepos(username) {
 
                 // Create the html markup for each li
                 li.innerHTML = (`
+                <div class="box my-4 px-1">
                 <p><strong>Repo:</strong> ${data[i].name}</p>
                 <p><strong>Description:</strong> ${data[i].description}</p>
                 <p><strong>URL:</strong> <a href="${data[i].html_url}">${data[i].html_url}</a></p>
+                </div>
             `);
 
                 // Append each li to the ul
@@ -187,14 +189,15 @@ function requestReposDetails(repoUrl) {
                     console.log("tConti : "+tConti);
                     var conti;
                     li.innerHTML = (`
-                    <p><strong>Repo Name :</strong> ${data.name}</p>
-                    <p><strong>URL :</strong> <a href="${data.html_url}">${data.html_url}</a></p>
-                    <p><strong>Created by :</strong> ${data.owner.login}</p>
-                    <p><strong>Created At :</strong> ${data.created_at}</p>
-                    <p><strong>Last Commit On :</strong> ${data.pushed_at}</p>  
-                    <p><strong>Contributors :</strong> ${tConti}</p>
-                    <p><strong>Total Commits :</strong> ${totConti}</p>
-                    
+                    <div class="box">
+                        <p><strong>Repo Name :</strong> ${data.name}</p>
+                        <p><strong>URL :</strong> <a href="${data.html_url}">${data.html_url}</a></p>
+                        <p><strong>Created by :</strong> ${data.owner.login}</p>
+                        <p><strong>Created At :</strong> ${data.created_at}</p>
+                        <p><strong>Last Commit On :</strong> ${data.pushed_at}</p>  
+                        <p><strong>Contributors :</strong> ${tConti}</p>
+                        <p><strong>Total Commits :</strong> ${totConti}</p>
+                    </div>
                                    
                     `)}
                 , 500);
