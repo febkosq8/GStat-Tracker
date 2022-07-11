@@ -127,8 +127,8 @@ async function requestReposDetails(repoUrl) {
                         <p><strong>Repo Name :</strong> ${data.name}</p>
                         <p><strong>URL :</strong> <a href="${data.html_url}">${data.html_url}</a></p>
                         <p><strong>Created by :</strong> ${data.owner.login}</p>
-                        <p><strong>Created At :</strong> ${data.created_at}</p>
-                        <p><strong>Last Commit On :</strong> ${data.pushed_at}</p>  
+                        <p><strong>Created At :</strong> ${new Date(data.created_at).toLocaleString()}</p>
+                        <p><strong>Last Commit On :</strong> ${new Date(data.pushed_at).toLocaleString()}</p>  
                         <p><strong>Contributors :</strong> ${contributorTable}</p>
                         <p><strong>Total Commits :</strong> ${totalContributions}</p>
                     </div>
