@@ -22,7 +22,7 @@ usernameForm.addEventListener("submit", (e) => {
 	let usernameForm = usernameInput.value;
 
 	// Run GitHub API function, passing in the GitHub username
-	requestdisplayList(usernameForm);
+	requestUserRepoList(usernameForm);
 });
 
 // Listen for submissions on GitHub Repo URL input form
@@ -42,40 +42,42 @@ repoUrlForm.addEventListener("submit", (e) => {
 
 async function requestContributors(repoUrl) {
 	let url = `https://api.github.com/repos/${repoUrl}/contributors`;
-	return await dataFetch(url, "GET");
+	//https://api.github.com/repos/febkosq8/Gstat-tracker/contributors
+
+	let data = await dataFetch(url, "GET");
+
+	console.log("Inside requestContributors");
+	console.log(data);
+
+	return data;
 }
 
-async function requestdisplayList(username) {
+async function requestUserRepoList(username) {
 	let url = `https://api.github.com/users/${username}/repos`;
+	//https://api.github.com/users/febkosq8/repos
+
 	let data = await dataFetch(url, "GET");
+
+	console.clear();	
+	console.log("Inside requestUserRepoList");
+	console.log(data);
+	
 	let children = [];
 	if (data.message === "Not Found") {
 		let ul = document.getElementById("displayList");
-		// Create variable that will create li's to be added to ul
 		let li = document.createElement("li");
-		// Add Bootstrap list item class to each li
 		li.classList.add("list-group-item");
-		// Create the html markup for each li
-		li.innerHTML = `
-                <p><strong>No account exists with username:</strong> ${username}</p>`;
-		// Append each li to the ul
+		li.innerHTML = `<p><strong>No account exists with username:</strong> ${username}</p>`;
 		children.push(li);
 		ul.replaceChildren(...children);
 	} else {
-		// Get the ul with id of of displayList
 		let ul = document.getElementById("displayList");
 		let p = document.createElement("p");
 		p.innerHTML = `<p><strong>Number of Public Repos : ${data.length}</p>`;
 		ul.appendChild(p);
-		// Loop over each object in data array
 		for (let i in data) {
-			// Create variable that will create li's to be added to ul
 			let li = document.createElement("li");
-
-			// Add Bootstrap list item class to each li
 			li.classList.add("list-group-item");
-
-			// Create the html markup for each li
 			li.innerHTML = `
                 <div class="box my-4 px-1">
                 <p><strong>Repo:</strong> ${data[i].name}</p>
@@ -83,8 +85,6 @@ async function requestdisplayList(username) {
                 <p><strong>URL:</strong> <a href="${data[i].html_url}">${data[i].html_url}</a></p>
                 </div>
             `;
-
-			// Append each li to the ul
 			children.push(li);
 		}
 		ul.replaceChildren(...children);
@@ -93,18 +93,20 @@ async function requestdisplayList(username) {
 
 async function requestReposDetails(repoUrl) {
 	let url = `https://api.github.com/repos/${repoUrl}`;
-	// Get the ul with id of of displayList
+	//https://api.github.com/repos/febkosq8/Gstat-tracker
+
 	let ul = document.getElementById("displayList");
-	// Create variable that will create li's to be added to ul
 	let li = document.createElement("li");
-	// Add Bootstrap list item class to each li
 	li.classList.add("list-group-item");
-	// Create the html markup for each li
-	//https://api.github.com/repos/febkosq8/Gstat-tracker/contributors
 	let data = await dataFetch(url, "GET");
+
+	console.clear();
+	console.log("Inside requestReposDetails");
+	console.log(data);
+
 	let contributorList = await requestContributors(repoUrl);
 	let totalContributions = contributorList.reduce((acc, curr) => acc + curr.contributions, 0);
-	let contributorTable = `<table class="table">
+	let contributorTable = `<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
             <tr>
                 <td><strong>Name</strong></td>
