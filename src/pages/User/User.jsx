@@ -21,30 +21,26 @@ function User() {
 		setUser(username);
 	};
 	return (
-		<>
-			<div className='columns mt-4'>
-				<div className='column is-one-third'></div>
-				<div className='column'>
-					<div className='box' style={{ minWidth: "60%", maxWidth: "100%" }}>
-						<h1 className='title is-4 is-centered'>Search for user repo's</h1>
-						<form ref={userSearchFormRef} className='field has-addons' onSubmit={handleSubmit}>
-							<input
-								ref={userSearchInputRef}
-								className='input is-primary'
-								type='text'
-								name='username'
-								onChange={handleUsernameChange}
-								placeholder='GitHub Username'
-							/>
-							<button type='submit' className='button mx-2 is-info'>
-								Search
-							</button>
-						</form>
-					</div>
+		<div className='userRepoContainer'>
+			<div className='column is-centered' style={{ width: "75%", height: "50%" }}>
+				<div className='box' style={{ minWidth: "60%", maxWidth: "100%" }}>
+					<h1 className='title is-4 is-centered'>Search for user repo's</h1>
+					<form ref={userSearchFormRef} className='field has-addons' onSubmit={handleSubmit}>
+						<input
+							ref={userSearchInputRef}
+							className='input is-primary'
+							type='text'
+							name='username'
+							onChange={handleUsernameChange}
+							placeholder='GitHub Username'
+						/>
+						<button type='submit' className='button mx-2 is-info'>
+							Search
+						</button>
+					</form>
 				</div>
-				<div className='column'></div>
 			</div>
-			<ul className='list-group mx-auto p-3' style={{ width: "75%", height: "25rem", overflowY: "scroll" }}>
+			<ul className='list-group mx-auto p-3' style={{ width: "75%", height: "50%", overflowY: "auto" }}>
 				{userRepoList.map((repo) => (
 					<li className='list-group-item' key={repo.id}>
 						<div className='box my-4 ps-3'>
@@ -61,7 +57,7 @@ function User() {
 					</li>
 				))}
 			</ul>
-		</>
+		</div>
 	);
 }
 
