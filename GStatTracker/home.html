@@ -7,6 +7,7 @@
 
 		<!-- Import the Bulma CSS CDN -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	
 	</head>
 
@@ -55,50 +56,7 @@
 		  </nav>
 		  <!-- NavBar End -->
 
-		<!-- UserRepoSearch Start-->
-		<div class="columns mt-4">
-			<div class="column is-one-third"></div>
-			<div class="column">
-				<div class="box">
-					<h1 class="title is-4 is-centered">Search for user repo's</h1>
-					<form id="usernameForm" class="field has-addons" style="width: 400px">
-						<input
-							id="usernameInput"
-							class="input is-primary"
-							type="text"
-							name="username"
-							placeholder="GitHub Username"
-						/>
-						<input type="submit" class="button mx-2 is-info" value="Search" />
-					</form>
-				</div>
-			</div>
-			<div class="column"></div>
-		</div>
-		<!-- UserRepoSearch End-->
-
-		<!-- RepoDetailsSearch Start-->
-		<div class="columns mt-4">
-			<div class="column is-one-third"></div>
-			<div class="column">
-				<div class="box">
-					<h1 class="title is-4">Search for repo detail's</h1>
-					<form id="repoUrlForm" class="field has-addons" style="width: 500px">
-						<a class="button is-static">github.com/</a>
-						<input
-							id="repoInput"
-							class="input is-primary"
-							type="text"
-							name="repourl"
-							placeholder="GitHub Repo Directory"
-						/>
-						<input type="submit" class="button mx-2 is-info" value="Search" />
-					</form>
-				</div>
-			</div>
-			<div class="column"></div>
-		</div>
-		<!-- RepoDetailsSearch End-->
+		
 
 		<ul id="displayList" class="list-group mx-auto mb-5" style="width: 500px"></ul>
 

@@ -11,6 +11,11 @@ async function dataFetch(url, method) {
 	}).then((response) => response.json());
 }
 
+<><script src="//code.jquery.com/jquery.min.js"></script><script>
+	$.get("top.html", function(data){$("#nav-placeholder").replaceWith(data)};
+	});
+</script></>
+
 usernameForm.addEventListener("submit", (e) => {
 	// Prevent default form submission action
 	e.preventDefault();
