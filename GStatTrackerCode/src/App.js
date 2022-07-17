@@ -54,7 +54,7 @@ function App() {
 				<div className='content has-text-centered'>
 					<p>
 						<strong>GStat Tracker</strong> by <a href='https://febkosq8.me'>Febkosq8</a>. <br />
-						You are running <strong>Ver: 1.2.8</strong> .
+						You are running <strong>Ver: 1.2.9</strong> .
 					</p>
 				</div>
 			</footer>

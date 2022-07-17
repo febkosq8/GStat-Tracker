@@ -74,7 +74,7 @@ function Repo() {
 								<a href={`/user?username=${repoMetadata.owner.login}`}>{repoMetadata.owner.login}</a>
 							</p>
 							<p>
-								<strong>Created At :</strong>
+								<strong>Created At : </strong>
 								{new Date(repoMetadata.created_at).toLocaleString()}
 							</p>
 							<p>
