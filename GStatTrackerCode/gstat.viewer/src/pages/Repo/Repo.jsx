@@ -1,4 +1,5 @@
 import React from "react";
+import "./Repo.css";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import APIHandler from "../../handlers/APIHandler";
@@ -30,7 +31,7 @@ function Repo() {
 		setRepoUrl(repoUrl);
 	};
 	return (
-		<>
+		<div className="RepoContainer">
 			<div className='columns mt-4'>
 				<div className='column is-one-third'></div>
 				<div className='column'>
@@ -74,7 +75,7 @@ function Repo() {
 								<a href={`/user?username=${repoMetadata.owner.login}`}>{repoMetadata.owner.login}</a>
 							</p>
 							<p>
-								<strong>Created At : </strong>
+								<strong>Created At :</strong>
 								{new Date(repoMetadata.created_at).toLocaleString()}
 							</p>
 							<p>
@@ -118,7 +119,7 @@ function Repo() {
 					<></>
 				)}
 			</ul>
-		</>
+		</div>
 	);
 }
 
