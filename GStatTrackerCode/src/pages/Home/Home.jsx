@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+	const Nav=useNavigate();
 	return <div>
 
 		<div className='columns mt-4'>
@@ -21,7 +23,7 @@ function Home() {
 						</div>
 						<div class="message-body">
 							This page helps you to view the details of a GitHub User.<br></br>
-							<button class="button is-link" href="/user" >User Query</button>
+							<button class="button is-link" onClick={(e)=>{Nav("/user")}} >User Query</button>
 							
 						</div>
 				</article>
@@ -31,7 +33,7 @@ function Home() {
 						</div>
 						<div class="message-body">
 							This page helps you to view the details of a GitHub Repo.<br></br>
-							<button class="button is-link">Repo Query</button>
+							<button class="button is-link" onClick={(e)=>{Nav("/repo")}}>Repo Query</button>
 						</div>
 				</article>
 				<br></br>
