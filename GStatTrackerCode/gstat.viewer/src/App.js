@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import User from "./pages/User";
 import Repo from "./pages/Repo";
+import Log from "./pages/Log";
+
 function App() {
   return (
     <Router>
@@ -26,6 +28,10 @@ function App() {
 
               <a className="navbar-item" href="/repo">
                 Repo Query
+              </a>
+
+			        <a className="navbar-item" href="/log">
+                Admin Log
               </a>
 
               <div className="navbar-item has-dropdown is-hoverable">
@@ -56,6 +62,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/user" element={<User />} />
           <Route path="/repo" element={<Repo />} />
+          <Route path="/log" element={<Log />} />
         </Routes>
       </div>
 
@@ -64,7 +71,7 @@ function App() {
           <p>
             <strong>GStat Tracker</strong> by{" "}
             <a href="https://jgthms.com">Febkosq8</a>. <br />
-            You are running <strong>Ver: 1.3.0.5</strong> .
+            You are running <strong>Ver: 1.3.0.6</strong> .
           </p>
         </div>
       </footer>
