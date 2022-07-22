@@ -11,4 +11,5 @@ const userQuerySchema = new Schema({
 		}
 	]
 });
+
 module.exports = model("UserQuery", userQuerySchema);

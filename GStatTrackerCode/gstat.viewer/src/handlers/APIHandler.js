@@ -23,5 +23,14 @@ class APIHandler {
 			body: JSON.stringify(userQuery)
 		});
 	}
+	static async auditRepoQuery(repoQuery) {
+		await fetch(`http://localhost:3030/repo/audit`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(repoQuery)
+		});
+	}
 }
 export default APIHandler;
